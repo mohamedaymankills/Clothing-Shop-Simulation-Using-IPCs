@@ -4,6 +4,80 @@
 ## 📌 Project Overview
 This project simulates a **multi-process Clothing Shop** using **FIFO (named pipes) for Inter-Process Communication (IPC)**. It consists of three independent processes that communicate with each other to handle shop management, customer orders, and inventory updates in real time.
 
+
+## Code Flow
+```sql
++-----------------------------------------------------+
+|                     Start                           |
++-----------------------------------------------------+
+        |
+        v
++-----------------------------------------------------+
+| Shop Process: Read inventory from 'inventory.txt'  |
+| Initialize FIFO channels for IPC                    |
++-----------------------------------------------------+
+        |
+        v
++-----------------------------------------------------+
+| Display Inventory Periodically                      |
+| (Show item name, quantity, and price)               |
++-----------------------------------------------------+
+        |                    
+        v
++-----------------------------------------------------+
+| Listen for Customer Orders (FIFO_ORDER)            |
+| If an order is received, process it                |
++-----------------------------------------------------+
+        |
+        | Yes (Order Received)
+        v
++-----------------------------------------------------+
+| Check if item is in stock                          |
+| If enough stock, process order                     |
++-----------------------------------------------------+
+        |                    
+        | Yes (Sufficient Stock)      
+        v
++-----------------------------------------------------+
+| Deduct Ordered Quantity from Inventory             |
+| Confirm Order Completion to Customer               |
++-----------------------------------------------------+
+        |
+        v
++-----------------------------------------------------+
+| If item is out of stock, reject order              |
+| Notify customer                                    |
++-----------------------------------------------------+
+        |
+        v
++-----------------------------------------------------+
+| Listen for Inventory Updates (FIFO_UPDATE)         |
+| If an update is received, process it               |
++-----------------------------------------------------+
+        |                    
+        | Yes (Update Received)
+        v
++-----------------------------------------------------+
+| Update Inventory (Restock Items, Change Prices)    |
++-----------------------------------------------------+
+        |
+        v
++-----------------------------------------------------+
+| Display Updated Inventory                          |
++-----------------------------------------------------+
+        |
+        v
++-----------------------------------------------------+
+| Check if Shop should continue running              |
+| If yes, loop back to "Listen for Orders & Updates" |
+| If no, exit program                                |
++-----------------------------------------------------+
+        |
+        v
++-----------------------------------------------------+
+|                      End                            |
++-----------------------------------------------------+
+```
 ### **🛠 Components**
 The project consists of **three main processes**:
 
