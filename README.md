@@ -1,6 +1,27 @@
 # Clothing-Shop-Simulation-Using-IPCs
 # Clothing Shop Simulation
 
+
+graph TD;
+    Start([Start])
+    Shop_Process[Shop Process: Reads inventory, displays periodically]
+    Customer_Process[Customer Process: Takes order input, sends order via FIFO]
+    Shop_Receives_Order[Shop Receives Order: Processes order, updates inventory]
+    Inventory_Manager_Process[Inventory Manager Process: Takes restock input, sends update via FIFO]
+    Shop_Receives_Update[Shop Receives Update: Updates inventory and prices]
+    Display_Updated_Inventory[Display Updated Inventory]
+    End([End])
+
+    Start --> Shop_Process
+    Customer_Process -->|Sends Order via FIFO| Shop_Receives_Order
+    Shop_Receives_Order -->|Updates Inventory| Display_Updated_Inventory
+    Inventory_Manager_Process -->|Sends Update via FIFO| Shop_Receives_Update
+    Shop_Receives_Update -->|Updates Inventory & Prices| Display_Updated_Inventory
+    Display_Updated_Inventory -->|Loop Back| Shop_Process
+    Shop_Process -->|If Terminated| End
+
+
+
 ## 📌 Project Overview
 This project simulates a **multi-process Clothing Shop** using **FIFO (named pipes) for Inter-Process Communication (IPC)**. It consists of three independent processes that communicate with each other to handle shop management, customer orders, and inventory updates in real time.
 
