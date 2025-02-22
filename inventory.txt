@@ -1,0 +1,4 @@
+Shirt 10 20.50
+Jeans 5 45.99
+Jacket 3 79.99
+
